@@ -4,11 +4,11 @@
  git clone https://github.com/DariEFAL/sem-2-python-lab-1.git
  cd sem-2-python-lab-1
  uv venv
- .venv\Scripts\Activate.ps1
- (Для Linux: source .venv/bin/activate)
+ source .venv/bin/activate
+ (Для windows: .venv\Scripts\Activate.ps1)
 
  Установка зависимостей:
- pip install -e .
+ uv pip install -e .
 
  Вызов тестов: 
  pytest tests -v
@@ -16,3 +16,7 @@
  Вызов программы:
  
 ```
+
+# Источники задач:
+* json
+п

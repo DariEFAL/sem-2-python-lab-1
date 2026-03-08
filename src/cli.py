@@ -8,7 +8,7 @@ from src.sources.json import JsonSource
 from src.sources.genirator import GenSource
 from src.sources.stdin import StdinSource
 
-cli = typer.Typer(no_args_is_help=True)
+cli = typer.Typer()
 
 @cli.command("read")
 def read(

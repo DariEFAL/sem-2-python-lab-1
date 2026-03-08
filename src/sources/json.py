@@ -12,6 +12,7 @@ def parse_json_file(line: str, path: Path, line_number: int):
     except json.JSONDecodeError as error:
         raise ValueError(f"Плохой ввод json в {path} в строке {line_number}: {error}") from error
 
+
 @dataclass(frozen=True)
 class JsonSource:
     path: Path

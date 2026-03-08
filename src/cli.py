@@ -1,11 +1,14 @@
 from pathlib import Path
+from typing import Any
 
 import typer
 
 from src.inbox.core import InboxApp
 from src.sources.json import JsonSource
+from src.sources.genirator import GenSource
+from src.sources.stdin import StdinSource
 
-cli = typer.Typer(no_args_is_help=True) # параметр, чтобы если пользователь запустил без арг, то показалась справка
+cli = typer.Typer(no_args_is_help=True)
 
 @cli.command("read")
 def read(
@@ -15,11 +18,24 @@ def read(
         exists=True,
         dir_okay=False,
         readable=True,
-    ),):
+    ),
+    gen: list[int] = typer.Option(
+        help="Read task from gen",
+        default_factory=list,
+        min=1
+    ),
+    stdin: bool = typer.Option(False, "--stdin", help="Read task from stdin"),):
 
-    sources = []
+    sources: list[Any] = []
+
     for path in jsonl:
         sources.append(JsonSource(path))
+
+    for count in gen:
+        sources.append(GenSource(count))
+
+    if stdin:
+        sources.append(StdinSource())
     
     inbox = InboxApp(sources)
     for task in inbox.iter_task():

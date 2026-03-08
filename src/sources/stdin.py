@@ -6,11 +6,12 @@ from collections.abc import Iterable
 from src.contracts.task import Task
 
 
-def check_stdin(task: list[str], line_number: int):
+def check_stdin(task: list[str], line_number: int) -> list[str]:
+    """Проверяет данные, которые ввел пользователь"""
     try:
         return task[0], task[1] 
     except ValueError:
-        raise ValueError(f"строка: {line_number}: задача состоит только из двух аргументов: id и text")
+        raise ValueError(f"строка: {line_number}: задача может состоять только из двух аргументов: id и text")
 
 
 @dataclass(frozen=True)
@@ -19,6 +20,11 @@ class StdinSource:
     name: str = "stdin"
 
     def get_tasks(self) -> Iterable[Task]:
+        """
+        Возвращает задачи полученные из stdin
+        :param argumentes: None
+        :return: Iterable[Task]
+        """
         for line_number, line in enumerate(self.stream):
             line = line.strip().split(":")
 

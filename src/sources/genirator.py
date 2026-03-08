@@ -10,6 +10,11 @@ class GenSource:
     name: str = "gen"
 
     def get_tasks(self) -> Iterable[Task]:
+        """
+        Создает задачи и отправляет их
+        :param argumentes: None
+        :return: Iterable[Task]
+        """
         for i in range(1, self.count_gen_tasks + 1):
 
             task_id = f"{self.name}_{str(i)}"

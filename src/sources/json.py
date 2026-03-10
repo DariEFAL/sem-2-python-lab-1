@@ -12,8 +12,9 @@ def parse_json_file(line: str, path: Path, line_number: int) -> dict[str, str]:
     try:
         return json.loads(line)
     except json.JSONDecodeError as error:
-        logging_result(False, id=None, error_text=f"Плохой ввод json в {path} в строке {line_number}")
-        raise ValueError(f"Плохой ввод json в {path} в строке {line_number}: {error}") from error
+        logging_result(False, id=None, error_text=f"Неправильный ввод jsonl в {path} в строке {line_number}")
+        print(f"Неправильный ввод jsonl в {path} в строке {line_number}")
+        return {"error": f"Неправильный ввод jsonl в {path} в строке {line_number}"}
 
 
 @dataclass(frozen=True)
@@ -35,6 +36,9 @@ class JsonSource:
                     continue
 
                 task = parse_json_file(line, self.path, line_number)
+                if "error" in task:
+                    continue
+
                 task_id = task.get("id", f"{self.path.name}:{line_number}")
                 task_text = task.get("text", "")
 

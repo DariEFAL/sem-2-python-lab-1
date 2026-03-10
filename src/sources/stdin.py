@@ -7,13 +7,14 @@ from src.contracts.task import Task
 from src.logging import logging_result
 
 
-def check_stdin(task: list[str], line_number: int) -> list[str]:
+def check_stdin(task: list[str], line_number: int) -> dict[str, str]:
     """Проверяет данные, которые ввел пользователь"""
     try:
-        return task[0], task[1] 
+        return {"id": task[0], "text": task[1]}
     except ValueError:
-        logging_result(False, id=None, error_text=f"Плохой ввод stdin:строка: {line_number}: задача может состоять только из двух аргументов: id и text")
-        raise ValueError(f"строка: {line_number}: задача может состоять только из двух аргументов: id и text")
+        logging_result(False, id=None, error_text=f"Неправильный ввод stdin в строке {line_number}: задача может состоять только из двух аргументов: id и text")
+        print(f"Неправильный ввод stdin в строке {line_number}: задача может состоять только из двух аргументов: id и text")
+        return {"error": f"Неправильный ввод stdin в строке {line_number}: задача может состоять только из двух аргументов: id и text"}
 
 
 @dataclass(frozen=True)
@@ -33,7 +34,12 @@ class StdinSource:
             if not line:
                 continue
 
-            task_id, task_text = check_stdin(line, line_number)
+            task = check_stdin(line, line_number)
+            if "error" in task:
+                    continue
+                
+            task_id = task.get("id", "")
+            task_text = task.get("text", "")
             
             yield Task(
                 id=task_id, text=task_text

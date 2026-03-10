@@ -38,5 +38,10 @@ def read(
         sources.append(StdinSource())
     
     inbox = InboxApp(sources)
+    task_count = 0
     for task in inbox.iter_task():
+        task_count += 1
         typer.echo(f"{task.id}: {task.text}")
+    
+    typer.echo(f"Всего задач: {task_count}")
+

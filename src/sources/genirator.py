@@ -1,3 +1,5 @@
+import uuid
+
 from collections.abc import Iterable
 from dataclasses import dataclass
 
@@ -17,7 +19,7 @@ class GenSource:
         """
         for i in range(1, self.count_gen_tasks + 1):
 
-            task_id = f"{self.name}_{str(i)}"
+            task_id = str(uuid.uuid4()) # создает id
             task_text = f"Сгенерирована задача номер {i}"
 
             yield Task(

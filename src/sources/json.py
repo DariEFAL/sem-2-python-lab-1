@@ -1,4 +1,6 @@
 import json
+import uuid
+
 from collections.abc import Iterable
 from pathlib import Path
 from dataclasses import dataclass
@@ -39,7 +41,7 @@ class JsonSource:
                 if "error" in task:
                     continue
 
-                task_id = task.get("id", f"{self.path.name}:{line_number}")
+                task_id = str(uuid.uuid4()) # создает новое id
                 task_text = task.get("text", "")
 
                 yield Task(

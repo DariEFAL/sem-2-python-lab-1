@@ -28,14 +28,14 @@ def read(
 
     sources: list[Any] = []
 
+    if stdin:
+        sources.append(StdinSource())
+
     for path in jsonl:
         sources.append(JsonSource(path))
 
     for count in gen:
         sources.append(GenSource(count))
-
-    if stdin:
-        sources.append(StdinSource())
     
     inbox = InboxApp(sources)
     task_count = 0

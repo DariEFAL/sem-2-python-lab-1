@@ -1,4 +1,6 @@
 import sys
+import uuid
+
 from dataclasses import dataclass
 from typing import TextIO
 from collections.abc import Iterable
@@ -24,17 +26,20 @@ class StdinSource:
 
     def get_tasks(self) -> Iterable[Task]:
         """
-        Возвращает задачи полученные из stdin
+        Возвращает задачи полученные из stdin. Пользователь вводит только задачу.
         :param argumentes: None
         :return: Iterable[Task]
         """
         for line_number, line in enumerate(self.stream):
-            line = line.strip().split(":")
+
+            line = line.strip()
 
             if not line:
                 continue
 
-            task = check_stdin(line, line_number)
+            id = str(uuid.uuid4()) # создает id
+
+            task = check_stdin([id, line], line_number)
             if "error" in task:
                     continue
                 

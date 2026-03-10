@@ -1,3 +1,5 @@
+import uuid
+
 from collections.abc import Sequence, Iterable
 
 from src.contracts.task_source import TaskSource
@@ -7,7 +9,7 @@ from src.logging import logging_result
 
 class InboxApp:
     def __init__(self, sources: Sequence[TaskSource] = None):
-        self._sources = sources or []
+        self.sources = sources or []
 
     def iter_task(self) -> Iterable[Task]:
         """
@@ -15,7 +17,7 @@ class InboxApp:
         :param argumentes: None
         :return: Iterable[Task]
         """
-        for source in self._sources:
+        for source in self.sources:
             if not isinstance(source, TaskSource):
                 logging_result(False, id=None, error_text="Источник должен быть типа TaskSource")
                 raise TypeError("Источник должен быть типа TaskSource")

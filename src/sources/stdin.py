@@ -4,6 +4,7 @@ from typing import TextIO
 from collections.abc import Iterable
 
 from src.contracts.task import Task
+from src.logging import logging_result
 
 
 def check_stdin(task: list[str], line_number: int) -> list[str]:
@@ -11,6 +12,7 @@ def check_stdin(task: list[str], line_number: int) -> list[str]:
     try:
         return task[0], task[1] 
     except ValueError:
+        logging_result(False, id=None, error_text=f"Плохой ввод stdin:строка: {line_number}: задача может состоять только из двух аргументов: id и text")
         raise ValueError(f"строка: {line_number}: задача может состоять только из двух аргументов: id и text")
 
 

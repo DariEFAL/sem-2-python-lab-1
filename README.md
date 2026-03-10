@@ -13,10 +13,11 @@
  Вызов тестов: 
  pytest tests -v
 
- Вызов программы:
- 
+ Вызов программы: python -m main 
 ```
 
 # Источники задач:
-* json
-п
+* jsonl: python -m main --jsonl *путь к файлу*
+* stdin: python -m main --stdin
+* genirator: python -m main --gen *кол-во задач, которые надо сгенерировать*
+

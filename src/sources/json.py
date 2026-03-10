@@ -4,6 +4,7 @@ from pathlib import Path
 from dataclasses import dataclass
 
 from src.contracts.task import Task
+from src.logging import logging_result
 
 
 def parse_json_file(line: str, path: Path, line_number: int) -> dict[str, str]:
@@ -11,6 +12,7 @@ def parse_json_file(line: str, path: Path, line_number: int) -> dict[str, str]:
     try:
         return json.loads(line)
     except json.JSONDecodeError as error:
+        logging_result(False, id=None, error_text=f"Плохой ввод json в {path} в строке {line_number}")
         raise ValueError(f"Плохой ввод json в {path} в строке {line_number}: {error}") from error
 
 

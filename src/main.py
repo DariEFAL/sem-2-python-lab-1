@@ -16,9 +16,7 @@ def main():
             error_text = ' '.join(sys.argv[1:])
             logging_result(False, id=None, error_text=f"Неправильный ввод команды: {error_text}")
             print(f"Неправильный ввод команды: {error_text}", file=sys.stderr)
-            sys.exit(1)
-
-        raise
+        return error.code
 
 
 if __name__ == "__main__":
